@@ -26,7 +26,6 @@ const Login = () => {
 
     const responseGoogle = (response) => {
         //setting profile obj to local storage
-        console.log(response.profileObj.name)
         localStorage.setItem('user', JSON.stringify(response.profileObj))
         const { name, googleId, imageUrl } = response.profileObj
 
@@ -60,7 +59,7 @@ const Login = () => {
             <div className='absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay' >
                 <div className='flex justify-center items-end space-x-1 mb-4' >
                     <div className='flex justify-center align-center'>
-                        <BsFillPeopleFill className='w-8 h-8 text-white' />
+                        <BsFillPeopleFill className='w-8 h-8 text-blue-500' />
                     </div>
                     <div className='flex justify-center items-center'>
                         <p className='text-white text-lg'>ConnectMe</p>

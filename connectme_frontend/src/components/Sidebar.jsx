@@ -1,10 +1,7 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FaHome } from 'react-icons/fa'
-import { TiArrowForward } from 'react-icons/ti'
 import { BsFillPeopleFill } from 'react-icons/bs'
-import { HiHome } from 'react-icons/hi'
-
 
 const Sidebar = ({ user, closeToggle }) => {
 
@@ -53,7 +50,7 @@ const Sidebar = ({ user, closeToggle }) => {
                         <NavLink to={`/category/${category.name}`}
                             className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
                             onClick={handleCloseSidebar}
-                            key={category.id}
+                            key={category.name}
                         >
                             {category.name}
                         </NavLink>

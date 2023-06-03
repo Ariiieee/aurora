@@ -10,8 +10,6 @@ const Feeds = () => {
   const [pins, setPins] = useState(null)
 
   const { categoryId } = useParams()
-  console.log(categoryId)
-
   useEffect(() => {
     setLoading(true)
 
@@ -29,8 +27,6 @@ const Feeds = () => {
           setPins(data)
           setLoading(false)
         })
-
-
     }
 
   }, [categoryId])

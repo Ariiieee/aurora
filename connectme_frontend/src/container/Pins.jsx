@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom'
 import Feed from '../components/Feed';
 import CreatePin from '../components/CreatePin';

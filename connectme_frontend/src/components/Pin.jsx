@@ -16,13 +16,13 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
   const [savingPost, setSavingPost] = useState(false)
 
   const user = fetchUser()
-  console.log(save)
+
   //hint: the user googleId is already there of users who saved the post ==> item.postedBy._id
   const alreadySaved = !!(save?.filter((item) => item.postedBy._id === user.googleId))?.length;
 
   const savePin = (id) => {
     if (!alreadySaved) {
-      setSavingPost(true)
+      // setSavingPost(true)
       //update the document in the sanity database
       client
         .patch(id)
@@ -38,7 +38,7 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
         .commit()
         .then(() => {
           window.location.reload()
-          setSavingPost(false)
+          // setSavingPost(false)
         })
 
     }
@@ -49,10 +49,9 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
       .delete(id)
       .then(() => {
         //hint: this removes the post from the view
+        console.log(id)
         window.location.reload()
-
       })
-
   }
 
   return (

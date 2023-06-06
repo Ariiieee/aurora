@@ -49,7 +49,7 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
       .delete(id)
       .then(() => {
         //hint: this removes the post from the view
-        console.log(id)
+
         window.location.reload()
       })
   }
@@ -109,7 +109,8 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
                   className='bg-white flex items-center gap-2 text-black font-bold p-2 pr-4 pl-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md outlined-none'
                 >
                   <BsFillArrowUpRightCircleFill />
-                  {destination.length > 20 ? destination.slice(8, 20) : destination.slice(8)}
+                  {/* {destination.length > 20 ? destination.slice(8, 20) : destination.slice(8)} */}
+                  {destination.length > 15 ? `${destination.slice(0, 15)}...` : destination}
                 </a>
               )}
               {postedBy?._id === user.googleId && (

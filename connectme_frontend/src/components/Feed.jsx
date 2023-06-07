@@ -35,6 +35,11 @@ const Feeds = () => {
     return <Spinner message="We are adding new gaming ideas to your feed!" />
   }
 
+  if (!pins?.length) {
+    return <h2 className='flex mt-20 justify-center items-center'>No pictures available....</h2>
+  }
+
+
   return (
     <div>
       {pins && <MasonryLayout pins={pins} />}

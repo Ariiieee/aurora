@@ -14,7 +14,7 @@ const Login = () => {
         const clientId = process.env.REACT_APP_GOOGLE_API_TOKEN
         function start() {
             gapi.load("auth2", () => {
-                gapi.auth2.init({
+                gapi.auth2.getAuthInstance({
                     client_id: clientId,
                 });
             });

@@ -22,7 +22,7 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
 
   const savePin = (id) => {
     if (!alreadySaved) {
-      // setSavingPost(true)
+      setSavingPost(true)
       //update the document in the sanity database
       client
         .patch(id)
@@ -38,7 +38,7 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
         .commit()
         .then(() => {
           window.location.reload()
-          // setSavingPost(false)
+          setSavingPost(false)
         })
 
     }
@@ -84,6 +84,7 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
                 <button
                   type='button'
                   className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outlined-none'
+
                 >
                   {save?.length} saved
                 </button>
@@ -109,7 +110,7 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
                   className='bg-white flex items-center gap-2 text-black font-bold p-2 pr-4 pl-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md outlined-none'
                 >
                   <BsFillArrowUpRightCircleFill />
-                  {/* {destination.length > 20 ? destination.slice(8, 20) : destination.slice(8)} */}
+
                   {destination.length > 15 ? `${destination.slice(0, 15)}...` : destination}
                 </a>
               )}

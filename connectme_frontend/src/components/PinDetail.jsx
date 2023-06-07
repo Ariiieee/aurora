@@ -37,6 +37,7 @@ const PinDetail = ({ user }) => {
           fetchPinDetails()
           setComment('')
           setAddingComment(false)
+
         })
     }
   }

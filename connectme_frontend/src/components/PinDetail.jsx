@@ -20,21 +20,29 @@ const PinDetail = ({ user }) => {
   const handleAddComment = () => {
     if (comment) {
       setAddingComment(true)
-
+      const id = uuidv4()
       client
         .patch(pinId)
         .setIfMissing({ comments: [] })
         .insert('after', 'comments[-1]', [{
           comment,
-          _key: uuidv4(),
+          _key: id,
           postedBy: {
             _type: 'postedBy',
             _ref: user._id
           }
         }])
         .commit()
-        .then(() => {
-          fetchPinDetails()
+        .then((res) => {
+          const newComment = { _key: id, comment, postedBy: { _id: user._id, image: user.image, userName: user.userName } }
+
+
+          setPinDetail(prev => ({
+            ...prev,
+            comments: prev.comments ? [...prev.comments, newComment] : [newComment]
+          }))
+
+          // fetchPinDetails()
           setComment('')
           setAddingComment(false)
 
@@ -48,12 +56,14 @@ const PinDetail = ({ user }) => {
     if (query) {
       client.fetch(query)
         .then((data) => {
+
           setPinDetail(data[0])
           if (data[0]) {
-            query = pinDetailMorePinQuery(data[0])
+            const query1 = pinDetailMorePinQuery(data[0])
 
-            client.fetch(query)
+            client.fetch(query1)
               .then((res) => {
+
                 setPins(res)
               })
           }
@@ -124,7 +134,7 @@ const PinDetail = ({ user }) => {
 
             {pinDetail?.comments?.map((comment) => (
               <div
-                key={uuidv4()}
+                key={comment?._key}
                 className='flex mt-5 gap-2 items-center bg-white rounded-lg'
               >
                 <img
@@ -167,7 +177,7 @@ const PinDetail = ({ user }) => {
           </div>
         </div>
       </div>
-      {console.log(pins)}
+
       {
         pins?.length > 0 ? (
           <>

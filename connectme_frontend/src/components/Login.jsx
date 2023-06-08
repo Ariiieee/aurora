@@ -6,6 +6,7 @@ import { BsFillPeopleFill } from 'react-icons/bs'
 import ConnectMe from '../assets/videos/connectme.mp4'
 import { useEffect } from 'react';
 import { gapi } from "gapi-script";
+import AuroraLogo from "../assets/images/aurora.logo.png";
 import { client } from "../client"
 
 const Login = () => {
@@ -57,14 +58,17 @@ const Login = () => {
                 />
             </div>
             <div className='absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay' >
-                <div className='flex justify-center items-end space-x-1 mb-4' >
-                    <div className='flex justify-center align-center'>
-                        <BsFillPeopleFill className='w-8 h-8 text-blue-500' />
+                <div className='flex justify-center gap-2 items-end  mb-4'>
+                    <div className='flex justify-center items-center'>
+                        <img src={AuroraLogo} className='w-8 h-8' alt="logo" />
                     </div>
                     <div className='flex justify-center items-center'>
-                        <p className='text-white text-lg'>ConnectMe</p>
+                        <p
+                            className='text-white text-lg uppercase tracking-[0.25em]'
+                        >
+                            aurora
+                        </p>
                     </div>
-
                 </div>
                 <div className='shadow-2xl'>
                     <GoogleLogin

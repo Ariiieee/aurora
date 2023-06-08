@@ -28,7 +28,6 @@ const Feeds = () => {
           setLoading(false)
         })
     }
-
   }, [categoryId])
 
   if (loading) {
@@ -36,7 +35,7 @@ const Feeds = () => {
   }
 
   if (!pins?.length) {
-    return <h2 className='flex mt-20 justify-center items-center'>No pictures available....</h2>
+    return <h2 className='flex mt-20 justify-center items-center font-bold text-xl'>No pictures available....</h2>
   }
 
 

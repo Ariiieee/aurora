@@ -9,6 +9,7 @@ import Pins from './Pins'
 import { client } from '../client'
 import { userQuery } from '../utils/data'
 import { fetchUser } from '../utils/fetchUser'
+import AuroraLogo from '../assets/images/aurora.logo.png'
 
 
 const Home = () => {
@@ -42,14 +43,18 @@ const Home = () => {
                 <div className='w-full flex flex-row p-2 justify-between items-center shadow-md'>
                     <HiOutlineMenu fontSize={35} className='cursor-pointer' onClick={() => setToggleSidebar(true)} />
                     <Link to='/'>
-                        <div className='flex justify-center items-end space-x-1 mt-2'>
-                            <div className='flex justify-center align-center'>
-                                <BsFillPeopleFill className='w-6 h-6 text-blue-600' />
+                        <div className='flex justify-center items-end space-x-1 '>
+
+                            <div className='flex justify-center items-center'>
+                                <img src={AuroraLogo} className='w-8 h-8' alt="logo" />
                             </div>
                             <div className='flex justify-center items-center'>
-                                <p className='text-black text-md font-semibold'>ConnectMe</p>
+                                <p className='text-black text-lg uppercase tracking-[0.25em]'>
+                                    aurora
+                                </p>
                             </div>
                         </div>
+
                     </Link>
                     <Link to={`user-profile/${user?._id}`}>
                         <div className='flex justify-center items-end space-x-1 mt-2'>

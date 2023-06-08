@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { FaHome } from 'react-icons/fa'
 import { BsFillPeopleFill } from 'react-icons/bs'
 import { categories } from '../utils/data'
+import AuroraLogo from '../assets/images/aurora.logo.png'
 
 const Sidebar = ({ user, closeToggle }) => {
 
@@ -18,14 +19,20 @@ const Sidebar = ({ user, closeToggle }) => {
         <div className='flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar'>
             <div className='flex flex-col'>
                 <Link to="/" className='flex px-5 gap-2 my-6 pt-1 w-190 items-center' onClick={handleCloseSidebar}>
-                    <div className='flex justify-center items-end space-x-1 '>
+                    <div className='flex justify-center items-end space-x-1 mb-4'>
                         <div className='flex justify-center align-center'>
-                            <BsFillPeopleFill className='w-6 h-6 text-blue-600' />
+                            <div className='flex justify-center items-center'>
+                                <img src={AuroraLogo} className='w-8 h-8' alt="logo" />
+                            </div>
                         </div>
                         <div className='flex justify-center items-center'>
-                            <p className='text-black text-md font-semibold'>ConnectMe</p>
+                            <p className='text-black text-lg font-semi-bold uppercase tracking-[0.25em]'
+                            >
+                                aurora
+                            </p>
                         </div>
                     </div>
+
                 </Link>
                 <div className='flex flex-col gap-5'>
                     <NavLink

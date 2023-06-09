@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import { MdDownloadForOffline } from 'react-icons/md'
+import { MdDownloadForOffline, MdDeleteForever } from 'react-icons/md'
+import { FcLike } from 'react-icons/fc'
+import { AiOutlineEdit } from 'react-icons/ai'
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid'
 
@@ -13,6 +15,7 @@ const PinDetail = ({ user }) => {
   const [pinDetail, setPinDetail] = useState(null)
   const [comment, setComment] = useState('')
   const [addingComment, setAddingComment] = useState(false)
+  const [likeCount, setLikeCount] = useState(0)
 
   //hint: whatever you set as a dynamic parameter from path in the route component, which in this case its pinId,that points to pinDetails comp, you can use useParams() to fetch it right here
   const { pinId } = useParams()
@@ -34,7 +37,15 @@ const PinDetail = ({ user }) => {
         }])
         .commit()
         .then((res) => {
-          const newComment = { _key: id, comment, postedBy: { _id: user._id, image: user.image, userName: user.userName } }
+          const newComment = {
+            _key: id,
+            comment,
+            postedBy: {
+              _id: user._id,
+              image: user.image,
+              userName: user.userName
+            }
+          }
 
 
           setPinDetail(prev => ({
@@ -49,6 +60,13 @@ const PinDetail = ({ user }) => {
         })
     }
   }
+
+  // const deleteComment = (docId) => {
+  //   client.delete(docId)
+  //     .then(() => {
+  //       window.local.reload()
+  //     })
+  // }
 
   const fetchPinDetails = () => {
     let query = pinDetailQuery(pinId)
@@ -76,12 +94,17 @@ const PinDetail = ({ user }) => {
   }, [pinId])
 
 
+
+
+
+
   if (!pinDetail) {
     return <Spinner message='Loading pictures... ' />
   }
 
   return (
     <>
+
       <div
         className='flex xl:flex-row flex-col m-auto bg-white'
         style={{ maxWidth: '1500px', borderRadius: '32px' }}
@@ -129,14 +152,24 @@ const PinDetail = ({ user }) => {
             />
             <p className='font-semibold capitalize'>{pinDetail.postedBy?.userName}</p>
           </Link>
-          <h2 className='mt-5 text-2xl'>Comments</h2>
+          {pinDetail?.comments?.length > 1 ? (
+            <div className='flex mt-5 gap-2'>
+              <p className='text-2xl'>{pinDetail?.comments?.length}</p>
+              <h2 className='text-2xl'>Comments</h2>
+            </div>
+          ) : (
+            <div className='flex mt-5 gap-2'>
+              <p className='text-2xl'>{pinDetail?.comments?.length}</p>
+              <h2 className='text-2xl'>Comment</h2>
+            </div>
+          )}
           <div className='max-h-370 overflow-y-auto'>
-
             {pinDetail?.comments?.map((comment) => (
               <div
                 key={comment?._key}
                 className='flex mt-5 gap-2 items-center bg-white rounded-lg'
               >
+
                 <img
                   src={comment?.postedBy?.image}
                   alt='user-profile'
@@ -144,7 +177,29 @@ const PinDetail = ({ user }) => {
                 />
                 <div className='flex flex-col'>
                   <p className='font-bold'>{comment?.postedBy?.userName}</p>
-                  <p >{comment.comment}</p>
+                  <p>{comment.comment}</p>
+                  {/*FIX: the edit, delete, time and comment feature */}
+                  {/* {comment && (
+                    <div className='flex gap-5'>
+                      <p className='text-gray-500 text-sm'>11m</p>
+                      <p className='text-gray-500 text-sm cursor-pointer'>Reply</p>
+                      <div
+                        className='flex justify-center gap-0.5 items-center cursor-pointer'
+                      >
+                        <FcLike />
+                        <p className='text-gray-500 text-sm'>1</p>
+                      </div>
+                      <div className='flex justify-center gap-0.5 items-center'>
+                        < AiOutlineEdit className='w-4.5 h-4.5 cursor-pointer' />
+                      </div>
+                      <div
+                        className='flex justify-center gap-0.5 items-center'
+                      // onClick={deleteComment}
+                      >
+                        < MdDeleteForever className='w-4.5 h-4.5 cursor-pointer' />
+                      </div>
+                    </div>
+                  )} */}
                 </div>
               </div>
             ))}

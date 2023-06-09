@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { HiOutlineMenu } from 'react-icons/hi'
 import { AiFillCloseCircle } from 'react-icons/ai'

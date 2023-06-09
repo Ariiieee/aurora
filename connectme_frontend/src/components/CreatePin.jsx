@@ -142,7 +142,12 @@ const CreatePin = ({ user }) => {
             type='text'
             value={title}
             placeholder='Add your title here'
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value
+              const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
+              setTitle(capitalizedValue)
+            }
+            }
             className='outline-none text-lg sm:text-xl rounded-lg font-bold border-b-2 border-gray-200 p-2'
           />
           {user && (

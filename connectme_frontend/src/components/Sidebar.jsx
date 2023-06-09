@@ -18,7 +18,11 @@ const Sidebar = ({ user, closeToggle }) => {
     return (
         <div className='flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar'>
             <div className='flex flex-col'>
-                <Link to="/" className='flex px-5 gap-2 my-6 pt-1 w-190 items-center' onClick={handleCloseSidebar}>
+                <Link
+                    to="/"
+                    className='flex px-5 gap-2 my-6 pt-1 w-190 items-center'
+                    onClick={handleCloseSidebar}
+                >
                     <div className='flex justify-center items-end space-x-1 mb-4'>
                         <div className='flex justify-center align-center'>
                             <div className='flex justify-center items-center'>

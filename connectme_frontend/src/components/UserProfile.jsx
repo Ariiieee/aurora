@@ -12,8 +12,8 @@ import Spinner from './Spinner'
 
 const randomImage = `https://source.unsplash.com/1600x900/?nature,photography,technology,food`
 
-const activeButtonStyles = 'bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none'
-const notActiveButtonStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none'
+const activeButtonStyles = 'bg-gray-300 text-dark-300 font-bold p-2 rounded-full w-20 outline-none'
+const notActiveButtonStyles = 'bg-primary mr-4 ext-gray-950 font-bold p-2 rounded-full w-20 outline-none'
 
 const UserProfile = () => {
     const [user, setUser] = useState(null);
@@ -136,10 +136,18 @@ const UserProfile = () => {
                         </div>
 
                     ) : (
-                        <div
-                            className='flex justify-center items-center font-bold w-full text-xl mt-2'
+                        <div className='flex flex-col gap-3 justify-center items-center  mt-4'
                         >
-                            No Pins Found ...
+                            <div className='mt-8 mb-2 flex justify-center items-center font-bold w-full text-2xl'>
+                                Inspire with a picture Idea
+                            </div>
+                            <button
+                                type='button'
+                                className='bg-blue-500 text-white font-bold p-3 rounded-full outline-none'
+                                onClick={() => navigate('/create-pin')}
+                            >
+                                Create
+                            </button>
                         </div>
                     )}
                 </div>

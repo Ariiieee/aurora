@@ -224,7 +224,7 @@ const PinDetail = ({ user }) => {
             />
             <button
               type='button'
-              className='bg-red-500 text-white px-6 rounded-full oy-2 font-semibold text-base outline-none'
+              className='bg-blue-500 text-white px-6 rounded-full oy-2 font-semibold text-base outline-none'
               onClick={handleAddComment}
             >
               {addingComment ? 'Posting the comment...' : 'Post'}

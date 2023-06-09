@@ -8,7 +8,7 @@ import AuroraLogo from '../assets/images/aurora.logo.png'
 const Sidebar = ({ user, closeToggle }) => {
 
     const isNotActiveStyle = 'flex items-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize'
-    const isActiveStyle = 'flex items-center px-5 gap-3 font-extrabold border-r-2 border-black transition-all duration-200 ease-in-out capitalize'
+    const isActiveStyle = 'flex items-center px-5 gap-3 font-extrabold border-r-4 border-blue-700 text-blue-700 transition-all duration-200 ease-in-out capitalize'
 
     const handleCloseSidebar = () => {
         if (closeToggle) {

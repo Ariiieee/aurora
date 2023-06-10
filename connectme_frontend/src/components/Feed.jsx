@@ -35,7 +35,7 @@ const Feeds = () => {
 
   if (loading) {
 
-    return <Spinner message={`We are adding new ${categoryId}ideas to your feed!`} />
+    return <Spinner message={`We are adding new ${categoryId} ideas to your feed!`} />
   }
 
   if (!pins?.length) {

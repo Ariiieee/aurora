@@ -49,7 +49,6 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
       .delete(id)
       .then(() => {
         //hint: this removes the post from the view
-
         window.location.reload()
       })
   }
@@ -84,11 +83,9 @@ const Pin = ({ pin: { image, destination, postedBy, _id, save } }) => {
                 <button
                   type='button'
                   className='bg-black opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outlined-none'
-                  onClick={(e) => {
-                    e.stopPropagation()
-                  }}
+
                 >
-                  {save?.length} saved
+                  saved
                 </button>
               ) : (
                 <button

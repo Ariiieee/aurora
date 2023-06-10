@@ -15,6 +15,7 @@ const PinDetail = ({ user }) => {
   const [pinDetail, setPinDetail] = useState(null)
   const [comment, setComment] = useState('')
   const [addingComment, setAddingComment] = useState(false)
+  const [commentTime, setCommentTime] = useState('')
   const [likeCount, setLikeCount] = useState(0)
 
   //hint: whatever you set as a dynamic parameter from path in the route component, which in this case its pinId,that points to pinDetails comp, you can use useParams() to fetch it right here
@@ -23,7 +24,8 @@ const PinDetail = ({ user }) => {
   const handleAddComment = () => {
     if (comment) {
       setAddingComment(true)
-      const id = uuidv4()
+      const id = uuidv4();
+
       client
         .patch(pinId)
         .setIfMissing({ comments: [] })
@@ -44,9 +46,9 @@ const PinDetail = ({ user }) => {
               _id: user._id,
               image: user.image,
               userName: user.userName
-            }
-          }
+            },
 
+          }
 
           setPinDetail(prev => ({
             ...prev,
@@ -60,13 +62,6 @@ const PinDetail = ({ user }) => {
         })
     }
   }
-
-  // const deleteComment = (docId) => {
-  //   client.delete(docId)
-  //     .then(() => {
-  //       window.local.reload()
-  //     })
-  // }
 
   const fetchPinDetails = () => {
     let query = pinDetailQuery(pinId)
@@ -89,6 +84,23 @@ const PinDetail = ({ user }) => {
     }
   }
 
+  const deleteComment = (_key) => {
+    const updatedComments = pinDetail.comments.filter((comment) => comment._key !== _key);
+    setPinDetail((prev) => ({
+      ...prev,
+      comments: updatedComments
+    }));
+
+    client
+      .patch(pinId)
+      .unset([`comments[_key=="${_key}"]`])
+      .commit()
+      .catch((error) => {
+        console.error("Error deleting comment:", error);
+      });
+  };
+
+
   useEffect(() => {
     fetchPinDetails()
   }, [pinId])
@@ -98,20 +110,25 @@ const PinDetail = ({ user }) => {
     return <Spinner message='Loading pictures... ' />
   }
 
+
+
   return (
     <>
       <div
         className='flex xl:flex-row flex-col m-auto bg-white '
         style={{ maxWidth: '1500px', borderRadius: '32px' }}
       >
+
         <div className='flex justify-center items-center md:items-start flex-initial'>
           <img
             src={pinDetail?.image && urlFor(pinDetail.image).url()} alt='user-post'
             className='rounded-t-3xl rounded-b-lg'
           />
         </div>
-        <div className='w-full p-5 flex-1 xl:min-w-620'>
-          <div className='flex items-center justify-between'>
+
+        <div className='w-full p-5 flex-1 xl:min-w-620  '>
+
+          <div className='flex items-center justify-between ' >
             <div className='flex gap-2 items-center'>
               <a
                 href={`${pinDetail.image?.asset?.url}?dl=`}
@@ -127,44 +144,49 @@ const PinDetail = ({ user }) => {
               target='_blank'
               rel='noreferrer noopener'
             >
-              {pinDetail.destination}
+              {pinDetail.destination.slice(0, 23)}
             </a>
           </div>
-          <div>
+          <div >
             <h1 className='text-4xl font-bold break-word mt-3'>
               {pinDetail.title}
             </h1>
             <p className='mt-3'>{pinDetail.about}</p>
           </div>
-          <Link
-            to={`user-profile/${pinDetail.postedBy?._id}`}
-            className='flex gap-2 mt-2 items-center bg-white rounded-lg'
-          >
-            <img
-              src={pinDetail.postedBy?.image}
-              className='h-8 w-8 rounded-full object-cover'
-              alt='user-profile'
-            />
-            <p className='font-semibold capitalize'>{pinDetail.postedBy?.userName}</p>
-          </Link>
-          {pinDetail?.comments?.length > 1 ? (
-            <div className='flex mt-5 gap-2'>
-              <p className='text-2xl'>{pinDetail?.comments?.length}</p>
-              <h2 className='text-2xl'>Comments</h2>
-            </div>
-          ) : (
-            <div className='flex flex-col gap-6 '>
-              <div className='flex mt-5 gap-2'>
-                <p className='text-2xl'>{pinDetail?.comments?.length}</p>
-                <h2 className='text-2xl'>Comment</h2>
+          <div >
+            <Link
+              to={`user-profile/${pinDetail.postedBy?._id}`}
+              className='flex gap-2 mt-2 items-center bg-white rounded-lg'
+            >
+              <img
+                src={pinDetail.postedBy?.image}
+                className='h-8 w-8 rounded-full object-cover'
+                alt='user-profile'
+              />
+              <p className='font-semibold capitalize'>{pinDetail.postedBy?.userName}</p>
+            </Link>
+            {pinDetail?.comments?.length > 1 ? (
+              <div className='flex justify-start items-center mt-5 gap-2'>
+                <p className='text-lg font-bold'>{pinDetail?.comments?.length}</p>
+                <h2 className='text-lg font-bold'>Comments</h2>
               </div>
-              <p className='ml-3 text-md text-gray-500'>
-                No comments yet. Add one to Start the conversation
-              </p>
-            </div>
-          )}
+            ) : pinDetail?.comments?.length === 1 ? (
+              <div className='flex flex-col gap-6'>
+                <div className='flex mt-5 justify-start items-center gap-2'>
+                  <p className='text-lg font-bold'>{pinDetail?.comments?.length}</p>
+                  <h2 className='text-lg font-bold'>Comment</h2>
+                </div>
+              </div>
+            ) : (
+              <div className='flex flex-col gap-6 '>
+                <p className='ml-3 mt-6 text-md text-gray-500'>
+                  No comments yet. Add one to start the conversation.
+                </p>
+              </div>
+            )}
+          </div>
 
-          <div className='max-h-370 overflow-y-auto mb-8'>
+          <div className='max-h-370  overflow-y-auto mb-6 xl:mb-16 '>
             {pinDetail?.comments?.map((comment) => (
               <div
                 key={comment?._key}
@@ -175,37 +197,36 @@ const PinDetail = ({ user }) => {
                   alt='user-profile'
                   className='h-10 w-10 rounded-full cursor-pointer'
                 />
+                {/*FIX: add edit, delete, time and comment feature */}
                 <div className='flex flex-col'>
                   <p className='font-bold'>{comment?.postedBy?.userName}</p>
+
                   <p>{comment.comment}</p>
-                  {/*FIX: the edit, delete, time and comment feature */}
-                  {/* {comment && (
+                  {comment && (
                     <div className='flex gap-5'>
-                      <p className='text-gray-500 text-sm'>11m</p>
-                      <p className='text-gray-500 text-sm cursor-pointer'>Reply</p>
+                      {/* <p className='text-gray-500 text-sm'>1m</p>
                       <div
                         className='flex justify-center gap-0.5 items-center cursor-pointer'
                       >
                         <FcLike />
                         <p className='text-gray-500 text-sm'>1</p>
-                      </div>
-                      <div className='flex justify-center gap-0.5 items-center'>
-                        < AiOutlineEdit className='w-4.5 h-4.5 cursor-pointer' />
-                      </div>
+                      </div> */}
+
                       <div
-                        className='flex justify-center gap-0.5 items-center'
-                      // onClick={deleteComment}
+                        className='flex justify-center  items-center'
+                        onClick={() => deleteComment(comment._key)}
                       >
-                        < MdDeleteForever className='w-4.5 h-4.5 cursor-pointer' />
+                        <MdDeleteForever
+                          className='w-5 h-5 text-red-600 cursor-pointer'
+                        />
                       </div>
                     </div>
-                  )} */}
+                  )}
                 </div>
               </div>
             ))}
           </div>
-
-          <div className=' border-t border-gray-300 pt-6'>
+          <div className=' border-t border-gray-300 pt-6 '>
             <h3 className='text-xl font-bold text-neutral-950 pb-2'>What do  you think?</h3>
             <div className='flex flex-wrap mt-6 gap-3'>
               <Link
@@ -234,6 +255,7 @@ const PinDetail = ({ user }) => {
             </div>
           </div>
         </div>
+
       </div>
 
       {

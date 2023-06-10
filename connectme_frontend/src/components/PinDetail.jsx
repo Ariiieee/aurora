@@ -94,19 +94,14 @@ const PinDetail = ({ user }) => {
   }, [pinId])
 
 
-
-
-
-
   if (!pinDetail) {
     return <Spinner message='Loading pictures... ' />
   }
 
   return (
     <>
-
       <div
-        className='flex xl:flex-row flex-col m-auto bg-white'
+        className='flex xl:flex-row flex-col m-auto bg-white '
         style={{ maxWidth: '1500px', borderRadius: '32px' }}
       >
         <div className='flex justify-center items-center md:items-start flex-initial'>
@@ -158,18 +153,23 @@ const PinDetail = ({ user }) => {
               <h2 className='text-2xl'>Comments</h2>
             </div>
           ) : (
-            <div className='flex mt-5 gap-2'>
-              <p className='text-2xl'>{pinDetail?.comments?.length}</p>
-              <h2 className='text-2xl'>Comment</h2>
+            <div className='flex flex-col gap-6 '>
+              <div className='flex mt-5 gap-2'>
+                <p className='text-2xl'>{pinDetail?.comments?.length}</p>
+                <h2 className='text-2xl'>Comment</h2>
+              </div>
+              <p className='ml-3 text-md text-gray-500'>
+                No comments yet. Add one to Start the conversation
+              </p>
             </div>
           )}
-          <div className='max-h-370 overflow-y-auto'>
+
+          <div className='max-h-370 overflow-y-auto mb-8'>
             {pinDetail?.comments?.map((comment) => (
               <div
                 key={comment?._key}
                 className='flex mt-5 gap-2 items-center bg-white rounded-lg'
               >
-
                 <img
                   src={comment?.postedBy?.image}
                   alt='user-profile'
@@ -204,31 +204,34 @@ const PinDetail = ({ user }) => {
               </div>
             ))}
           </div>
-          <div className='flex flex-wrap mt-6 gap-3 '>
-            <Link
-              to={`user-profile/${pinDetail.postedBy?._id}`}
 
-            >
-              <img
-                src={pinDetail.postedBy?.image}
-                className='h-10 w-10 rounded-full cursor-pointer'
-                alt='user-profile'
+          <div className=' border-t border-gray-300 pt-6'>
+            <h3 className='text-xl font-bold text-neutral-950 pb-2'>What do  you think?</h3>
+            <div className='flex flex-wrap mt-6 gap-3'>
+              <Link
+                to={`user-profile/${pinDetail.postedBy?._id}`}
+              >
+                <img
+                  src={pinDetail.postedBy?.image}
+                  className='h-10 w-10 rounded-full cursor-pointer'
+                  alt='user-profile'
+                />
+              </Link>
+              <input
+                className='flex-1 outline-none border-gray-100 border-2 p-2 rounded-2xl focus:border-gray-300'
+                type='text'
+                placeholder='add a comment'
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
               />
-            </Link>
-            <input
-              className='flex-1 outline-none border-gray-100 border-2 p-2 rounded-2xl focus:border-gray-300'
-              type='text'
-              placeholder='add a comment'
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-            <button
-              type='button'
-              className='bg-blue-500 text-white px-6 rounded-full oy-2 font-semibold text-base outline-none'
-              onClick={handleAddComment}
-            >
-              {addingComment ? 'Posting the comment...' : 'Post'}
-            </button>
+              <button
+                type='button'
+                className='bg-blue-500 text-white px-6 rounded-full oy-2 font-semibold text-base outline-none'
+                onClick={handleAddComment}
+              >
+                {addingComment ? 'Posting the comment...' : 'Post'}
+              </button>
+            </div>
           </div>
         </div>
       </div>

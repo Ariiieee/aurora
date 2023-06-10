@@ -9,9 +9,12 @@ const Feeds = () => {
   const [loading, setLoading] = useState(false)
   const [pins, setPins] = useState(null)
 
+
   const { categoryId } = useParams()
   useEffect(() => {
     setLoading(true)
+
+
 
     if (categoryId) {
       const query = searchQuery(categoryId);
@@ -31,7 +34,8 @@ const Feeds = () => {
   }, [categoryId])
 
   if (loading) {
-    return <Spinner message="We are adding new gaming ideas to your feed!" />
+
+    return <Spinner message={`We are adding new ${categoryId}ideas to your feed!`} />
   }
 
   if (!pins?.length) {

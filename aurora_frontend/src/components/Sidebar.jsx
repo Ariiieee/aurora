@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { FaHome } from 'react-icons/fa'
-import { BsFillPeopleFill } from 'react-icons/bs'
 import { categories } from '../utils/data'
 import AuroraLogo from '../assets/images/aurora.logo.png'
 

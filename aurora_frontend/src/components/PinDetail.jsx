@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import { MdDownloadForOffline, MdDeleteForever } from 'react-icons/md'
-import { FcLike } from 'react-icons/fc'
-import { AiOutlineEdit } from 'react-icons/ai'
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid'
 
@@ -15,8 +13,6 @@ const PinDetail = ({ user }) => {
   const [pinDetail, setPinDetail] = useState(null)
   const [comment, setComment] = useState('')
   const [addingComment, setAddingComment] = useState(false)
-  const [commentTime, setCommentTime] = useState('')
-  const [likeCount, setLikeCount] = useState(0)
 
   //hint: whatever you set as a dynamic parameter from path in the route component, which in this case its pinId,that points to pinDetails comp, you can use useParams() to fetch it right here
   const { pinId } = useParams()

@@ -2,7 +2,6 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc'
-import { BsFillPeopleFill } from 'react-icons/bs'
 import ConnectMe from '../assets/videos/connectme.mp4'
 import { useEffect } from 'react';
 import { gapi } from "gapi-script";
